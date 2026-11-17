@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_earable_flutter/open_earable_flutter.dart';
+import 'package:open_wearable/apps/acoustic_anchor/view/acoustic_anchor_view.dart';
 import 'package:open_wearable/apps/seal_check/audio_response_measurement_view.dart';
 import 'package:open_wearable/apps/heart_tracker/widgets/heart_tracker_page.dart';
 import 'package:open_wearable/apps/posture_tracker/model/earable_attitude_tracker.dart';
@@ -53,6 +54,10 @@ const List<String> _heartSupportedDevices = [
 const List<String> _sealCheckSupportedDevices = [
   "OpenEarable",
 ];
+const List<String> _acousticAnchorSupportedDevice = [
+  "OpenEarable",
+];
+
 final List<WearableCapabilityRequirement> _postureRequiredCapabilities = [
   WearableCapabilityRequirement.capability<SensorManager>(
     label: 'sensor streaming',
@@ -66,6 +71,12 @@ final List<WearableCapabilityRequirement> _heartRequiredCapabilities = [
 final List<WearableCapabilityRequirement> _sealCheckRequiredCapabilities = [
   WearableCapabilityRequirement.capability<AudioResponseManager>(
     label: 'audio response measurement',
+  ),
+];
+final List<WearableCapabilityRequirement> _acousticAnchorRequiredCapabilities =
+    [
+  WearableCapabilityRequirement.capability<SensorManager>(
+    label: 'sensor streaming',
   ),
 ];
 
@@ -217,6 +228,29 @@ final List<AppInfo> _apps = [
         return SealCheckMeasurementView(
           left: position == DevicePosition.right ? null : manager,
           right: position == DevicePosition.right ? manager : null,
+        );
+      },
+    ),
+  ),
+  AppInfo(
+    logoPath: "lib/apps/acoustic_anchor/assets/logo.png",
+    title: "Acousitc Anchor",
+    description: "Phone as virtual Sound Source",
+    supportedDevices: _acousticAnchorSupportedDevice,
+    requiredCapabilities: _acousticAnchorRequiredCapabilities,
+    accentColor: _appAccentColor,
+    widget: SelectEarableView(
+      supportedDevicePrefixes: _acousticAnchorSupportedDevice,
+      requiredCapabilities: _acousticAnchorRequiredCapabilities,
+      startApp: (wearable, sensorConfigProvider) async {
+        return AcousticAnchorView(
+          EarableAttitudeTracker(
+            wearable.requireCapability<SensorManager>(),
+            sensorConfigProvider,
+            wearable.hasCapability<StereoDevice>()
+          ),
+          wearable: wearable,
+          deviceId: wearable.deviceId,
         );
       },
     ),

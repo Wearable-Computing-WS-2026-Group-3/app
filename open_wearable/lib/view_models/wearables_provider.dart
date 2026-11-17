@@ -460,13 +460,13 @@ class WearablesProvider with ChangeNotifier {
         logger.i(
           'Newer firmware available for ${wearable.name}: $currentVersion -> $latestVersion',
         );
-        _emitWearableEvent(
+        /*_emitWearableEvent(
           NewFirmwareAvailableEvent(
             wearable: wearable,
             currentVersion: currentVersion,
             latestVersion: latestVersion,
           ),
-        );
+        );*/
       } else {
         logger.d(
           'Firmware is up to date for ${wearable.name}: $currentVersion',

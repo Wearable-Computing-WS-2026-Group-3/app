@@ -110,6 +110,7 @@ flutter:
     - lib/apps/posture_tracker/assets/
     - lib/apps/heart_tracker/assets/
     - lib/apps/seal_check/assets/
+    - lib/apps/acoustic_anchor/assets/
     - lib/assets/devices/phone-app.png
     - lib/assets/fonts/OFL.txt
     - android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
