@@ -26,6 +26,8 @@ class _AcousticAnchorViewState extends State<AcousticAnchorView> {
   late final WearablesProvider _wearablesProvider;
   Wearable? _wearable;
 
+  bool manualPosition = false;
+
   @override
   void initState() {
     super.initState();
@@ -67,22 +69,59 @@ class _AcousticAnchorViewState extends State<AcousticAnchorView> {
           DeviceRow(
               group: WearableDisplayGroup.single(
                   wearable: _wearable!,),),
-          const SizedBox(height: 12),
           Card(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
-              child: PlatformText("Das sollte die erste Karte sein"),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Set Position manually"
+                        ,),
+                        ),
+                      PlatformSwitch(
+                        value: manualPosition,
+                        onChanged: (newValue) {
+                          manualPosition = newValue;
+                        },
+                         ),
+                    ],
+                  ),
+              ],),
             ),
           ),
-          const SizedBox(height: 12),
           Card(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
-              child: PlatformText("Das sollte die zweite Karte sein"),
+              child: Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: constraints.maxWidth,
+                        child: Expanded(
+                          child: _buildPositionView(context),),
+                      ),
+                      );
+                  },
+                  ),
+              ),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+Widget _buildPositionView(
+  BuildContext context,
+) {
+  return Image.asset(
+    "lib/apps/acoustic_anchor/assets/human_top.png",
+    fit: BoxFit.contain,);
+
 }

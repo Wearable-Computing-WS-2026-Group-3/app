@@ -234,7 +234,7 @@ final List<AppInfo> _apps = [
   ),
   AppInfo(
     logoPath: "lib/apps/acoustic_anchor/assets/logo.png",
-    title: "Acousitc Anchor",
+    title: "Acoustic Anchor",
     description: "Phone as virtual Sound Source",
     supportedDevices: _acousticAnchorSupportedDevice,
     requiredCapabilities: _acousticAnchorRequiredCapabilities,
